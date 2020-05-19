@@ -1,0 +1,62 @@
+#a {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('Montserrat/Montserrat-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Montserrat';
+    src: url('Montserrat/Montserrat-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Zilla Slab';
+    src: url('Zilla_Slab/ZillaSlab-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+#InitialStartup {
+    font-family: 'Zilla Slab';
+}
+#c {
+    display: inline;
+    top: -0.5em;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+#d:focus {
+    outline: none;
+}
+/* @keyframes a {
+    0% {
+        filter: hue-rotate(360deg);
+    }
+} */
+body {
+    font-family: "Montserrat";
+    background: black;
+    color: white;
+}
+#bigTitle {
+    font-family: "Montserrat-Bold";
+    letter-spacing: 3px;
+    font-size: 30px;
+}
+#e {
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-family: "Zilla Slab";
+    color: var(--color);
+    background: black;
+    border: 2px solid var(--color);
+    font-weight: 900;
+    font-size: 25px;
+    letter-spacing: 3px;
+}
