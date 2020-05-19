@@ -3,42 +3,61 @@ Alright. Tribbles.
 We're going to make a tribble database.
 It's going to contain a username, password, and 
 */
-let http = require("http"),
-fs = require("fs"),
-keepRequests = {}
+const http = require("http"),
+    fs = require("fs"),
+    net = require("net"),
+    { URL } = require("url")
+let peopleDetails = {},
+MIMETypes = {
+    "html": "text/html",
+    "jpg": "image/jpeg",
+    "ico": "image/vnd.microsoft.icon",
+    "js": "text/javascript",
+    "png": "image/png",
+    "ttf": "font/ttf",
+    "css": "text/css"
+}
 
 http.createServer((req, res) => {
-    console.log(req.url)
-    if(req.url == "/") {
-        // Home page
-        fs.readFile("Frontend/home.html", (err, ans) => {
+    let PathToRead = req.url
+    if(req.method == "GET") {   
+        if(req.url == "/") {
+            PathToRead = "/home.html"
+        }
+        fs.readFile("Frontend" + PathToRead, (err, message) => {
             if(err) {
-                throw err
+                res.writeHead(404, {"Content-Type": MIMETypes["html"]})
+                fs.readFile("Frontend/404.html", (err, message) => {
+                    if(err)
+                        throw "Something went seriously wrong."
+                    res.write(message)
+                    res.end()
+                })
+            } else {
+                // Find MIME type
+                console.log(PathToRead)
+                let MType = MIMETypes[PathToRead.split(".")[1]] || "application/octet-stream"
+                console.log(MType)
+                res.writeHead(200, {"Content-Type": MType})
+                res.write(message)
+                res.end()
             }
-            res.write(ans)
-            res.end()
         })
     } else {
-        let finalURL = req.url,
-        potentialArguments = req.url.split("?")
-        if(potentialArguments.length > 1) {
-            // There are arguments we need to send to the frontend separately.
-            finalURL = potentialArguments[0]
-            for(let i = 1; i < potentialArguments.length; i++) {
-                // Keep these until the next time
-                keepRequests[potentialArguments[i].split("=")[0]] = potentialArguments[i].split("=")[1]
+        let message = ""
+        req.on("data", chunk => {
+            message += chunk.toString()
+        })
+        req.on("end", () => {
+            let messageI = [],
+            kee = message.split("&")
+            for(let i = 0; i < kee.length; i++) {
+                messageI.push([kee[i].split("=")[0], kee[i].split("=")[1]])
             }
-            console.log(keepRequests)
-        }
-        fs.readFile("Frontend" + finalURL, (err, ans) => {
-            if(err) {
-                // Couldn't find it
-                res.write("Couldn't find what you were looking for, sorry.")
-                res.end()
-            } else {
-                res.write(ans)
-                res.end()
-            }
+            console.log(messageI)
+            res.end("formRes.html")
         })
     }
-}).listen(3030)
+}).listen(3030, "127.0.0.1", () => {
+    console.log("Set it up!")
+})

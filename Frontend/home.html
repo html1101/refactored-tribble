@@ -2,12 +2,12 @@
 <html>
     <title>The Tribble Wars</title>
     <head>
-        <link rel="stylesheet" href="Montserrat/Montserrat-Regular.ttf">
+        <!-- <link href="Montserrat/Montserrat-Regular.ttf"> -->
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <div id="bigTitle">The Tribble Wars</div>
-        <form id="InitialStartup" action="/formRes.html">
+        <form name="InitialStartup" class="s" method="post">
             <img src="tribble.png" alt="Tribble" id="b">
             <br>
             Choose your color(this will be your team later):
@@ -15,6 +15,8 @@
             <label for="fcolor">Color: </label><br>
             <input type="range" min=0 max=340 id="d" name="fcolor"><div id="c"></div>
             <br>
+            <label for="fusername">Username: </label><br>
+            <input type="text" name="fusername" placeholder="Username">
             <input type="submit" value="Submit" id="e">
         </form>
         <script src="script.js"></script>
